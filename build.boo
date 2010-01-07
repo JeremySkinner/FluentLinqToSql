@@ -58,7 +58,7 @@ target coverage:
   with ncover():
     .toolPath = "${ncover_path}/NCover.console.exe"
     .reportDirectory = "build/Coverage"
-    .workingDirectory = "src/FluentLinqToSql.Tests/bin/${project_configuration}"
+    .workingDirectory = "src/FluentLinqToSql.Tests/bin/${configuration}"
     .applicationAssemblies = app_assemblies
     .program = "${teamcity_launcher} v2.0 x86 NUnit-2.4.6"
     .testAssembly = "FluentLinqToSql.Tests.dll;FluentLinqToSql.DatabaseTests.dll"
