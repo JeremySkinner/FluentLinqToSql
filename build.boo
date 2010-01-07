@@ -53,7 +53,7 @@ target coverage:
   teamcity_launcher = env("teamcity.dotnet.nunitlauncher")
   
   #ensure the dbtest assembly is in the right place...
-  cp(dbtest_assembly, "src/FluentLinqToSql.Tests/bin/${configuration}")
+  cp(dbtest_assembly, "src/FluentLinqToSql.Tests/bin/${configuration}/")
 
   with ncover():
     .toolPath = "${ncover_path}/NCover.console.exe"
