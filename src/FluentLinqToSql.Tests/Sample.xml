@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Database Name="Northwind" xmlns="http://schemas.microsoft.com/linqtosql/mapping/2007">
+	<Table Name="Customer">
+		<Type Name="Customer">
+			<Column Expression=""    Name="CustomerID"   Member="ID" Storage="" AutoSync="" CanBeNull="" />
+			<Association  DeleteRule="" OtherKey="" ThisKey=""  />
+		</Type>
+	</Table>
+	<Table Name="QualAims">
+		<Type Name="QualAim" InheritanceCode="">
+			...
+		</Type>
+	</Table>
+	<Function Method="x" Name="y">
+		<Parameter DbType="" Direction="In" Parameter="" Name="" />
+		<Return DbType="xyz"/>
+	</Function>
+</Database>

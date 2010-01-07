@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentLinqToSql", "src\FluentLinqToSql\FluentLinqToSql.csproj", "{FE10A0E2-931C-4A83-A3EA-1CCA549DB3A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentLinqToSql.Tests", "src\FluentLinqToSql.Tests\FluentLinqToSql.Tests.csproj", "{44D4DA4A-192B-4F8B-9E58-043E217A6848}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{17337D4F-AB67-4139-92FE-D4BE487838E1}"
+	ProjectSection(SolutionItems) = preProject
+		cruise.build = cruise.build
+		default.build = default.build
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentLinqToSql.DatabaseTests", "src\FluentLinqToSql.DatabaseTests\FluentLinqToSql.DatabaseTests.csproj", "{2F9D0F8E-484F-4038-B630-BFCCEF125887}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE10A0E2-931C-4A83-A3EA-1CCA549DB3A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE10A0E2-931C-4A83-A3EA-1CCA549DB3A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE10A0E2-931C-4A83-A3EA-1CCA549DB3A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE10A0E2-931C-4A83-A3EA-1CCA549DB3A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44D4DA4A-192B-4F8B-9E58-043E217A6848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44D4DA4A-192B-4F8B-9E58-043E217A6848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44D4DA4A-192B-4F8B-9E58-043E217A6848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44D4DA4A-192B-4F8B-9E58-043E217A6848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F9D0F8E-484F-4038-B630-BFCCEF125887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F9D0F8E-484F-4038-B630-BFCCEF125887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9D0F8E-484F-4038-B630-BFCCEF125887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F9D0F8E-484F-4038-B630-BFCCEF125887}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

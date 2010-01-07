@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FE10A0E2-931C-4A83-A3EA-1CCA549DB3A1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FluentLinqToSql</RootNamespace>
+    <AssemblyName>FluentLinqToSql</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\FluentLinqToSql.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="FluentMappingSource.cs" />
+    <Compile Include="FunctionMapping.cs" />
+    <Compile Include="Mappings\DiscriminatorMapping.cs" />
+    <Compile Include="Mappings\FunctionReturnTypeMapping.cs" />
+    <Compile Include="Mappings\IAssociationMapping.cs" />
+    <Compile Include="Mappings\IBelongsToMapping.cs" />
+    <Compile Include="Mappings\IDiscriminatorMapping.cs" />
+    <Compile Include="Mappings\IElementMapping.cs" />
+    <Compile Include="Mappings\IFunctionMethodMapping.cs" />
+    <Compile Include="Mappings\IFunctionParameterMapping.cs" />
+    <Compile Include="Internal\BindingMatcherAttribute.cs" />
+    <Compile Include="Internal\FunctionMappingExpressionParser.cs" />
+    <Compile Include="Internal\IHasAttributes.cs" />
+    <Compile Include="Mappings\IHasManyMapping.cs" />
+    <Compile Include="Mappings\IHasOneMapping.cs" />
+    <Compile Include="Mappings\AssociationMapping.cs" />
+    <Compile Include="Mappings\BelongsToMapping.cs" />
+    <Compile Include="Mappings\FunctionMethodMapping.cs" />
+    <Compile Include="Mappings\FunctionParameterMapping.cs" />
+    <Compile Include="Mappings\HasManyMapping.cs" />
+    <Compile Include="Mappings\HasOneMapping.cs" />
+    <Compile Include="Mappings\SubClassMapping.cs" />
+    <Compile Include="Mappings\TypeMapping.cs" />
+    <Compile Include="Mappings\IPropertyMapping.cs" />
+    <Compile Include="Modifications\ChangeUpdateCheckToNever.cs" />
+    <Compile Include="Modifications\IMappingModification.cs" />
+    <Compile Include="Mappings\ColumnMapping.cs" />
+    <Compile Include="Internal\Extensions.cs" />
+    <Compile Include="Mappings\IColumnMapping.cs" />
+    <Compile Include="Mappings\IMapping.cs" />
+    <Compile Include="Mapping.cs" />
+    <Compile Include="Private.cs" />
+    <Compile Include="TestHelper\MappingException.cs" />
+    <Compile Include="TestHelper\MappingTester.cs" />
+    <Compile Include="Modifications\MappingModification.cs" />
+    <Compile Include="Modifications\UseFieldForAssociationStorage.cs" />
+    <Compile Include="Internal\LinqElement.cs" />
+    <Compile Include="Modifications\ReplacePascalCaseWithUnderscoreModification.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
