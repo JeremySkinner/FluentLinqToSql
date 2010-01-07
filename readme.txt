@@ -20,3 +20,6 @@ mappingSource.AddFromAssemblyContaining<CustomerMapping>();
 
 var dataContext = new DataContext("connection-string", mappingSource);
 var customers = from c in dataContext.GetTable<Customer>() select c;
+
+Copyright Jeremy Skinner (http://www.jeremyskinner.co.uk)
+Licensed under the Apache License 2 (http://www.apache.org/licenses/LICENSE-2.0.html)
