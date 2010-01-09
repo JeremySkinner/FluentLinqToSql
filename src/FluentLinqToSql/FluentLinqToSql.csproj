@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="FluentMappingSource.cs" />
     <Compile Include="FunctionMapping.cs" />
+    <Compile Include="Internal\Constants.cs" />
     <Compile Include="Mappings\DiscriminatorMapping.cs" />
     <Compile Include="Mappings\FunctionReturnTypeMapping.cs" />
     <Compile Include="Mappings\IAssociationMapping.cs" />

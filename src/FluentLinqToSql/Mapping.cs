@@ -38,8 +38,8 @@ namespace FluentLinqToSql {
 		}
 
 		private string TableName {
-			get { return CustomProperties["TableName"].ToString(); }
-			set { CustomProperties["TableName"] = value; }
+			get { return CustomProperties[Constants.TableName].ToString(); }
+			set { CustomProperties[Constants.TableName] = value; }
 		}
 		
 
@@ -60,8 +60,8 @@ namespace FluentLinqToSql {
 			var typeElement = base.ToXml().Single();
 
 			yield return new LinqElement(
-				"Table",
-				new XAttribute("Name", TableName),
+				Constants.Table,
+				new XAttribute(Constants.Name, TableName),
 				typeElement
 			);
 		}

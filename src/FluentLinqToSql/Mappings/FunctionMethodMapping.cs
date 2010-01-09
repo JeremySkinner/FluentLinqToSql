@@ -36,8 +36,8 @@ namespace FluentLinqToSql.Mappings {
 
 		public FunctionMethodMapping(MethodInfo method, FunctionParameterMapping[] parameters) {
 			this.method = method;
-			attributes["Name"] = method.Name;
-			attributes["Method"] = method.Name;
+			attributes[Constants.Name] = method.Name;
+			attributes[Constants.Method] = method.Name;
 			this.parameters = parameters;
 		}
 
@@ -59,7 +59,7 @@ namespace FluentLinqToSql.Mappings {
 		}
 
 		public IFunctionMethodMapping Composable() {
-			return SetAttribute("IsComposable", "true");
+			return SetAttribute(Constants.IsComposable, "true");
 		}
 
 		public IFunctionMethodMapping ElementType<T>() {
@@ -78,11 +78,11 @@ namespace FluentLinqToSql.Mappings {
 		}
 
 		public IFunctionMethodMapping Named(string name) {
-			return SetAttribute("Name", name);
+			return SetAttribute(Constants.Name, name);
 		}
 
 		public IEnumerable<XElement> ToXml() {
-			yield return new LinqElement("Function",
+			yield return new LinqElement(Constants.Function,
                  attributes.Select(attribute => new XAttribute(attribute.Key, attribute.Value)),
                  parameters.Select(param => param.ToXml()),
 				 elementTypes.Select(e => e.ToXml().Single())

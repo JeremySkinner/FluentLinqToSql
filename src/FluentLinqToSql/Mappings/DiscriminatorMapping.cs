@@ -3,6 +3,7 @@ namespace FluentLinqToSql.Mappings {
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Xml.Linq;
+	using Internal;
 
 	public class DiscriminatorMapping<T, TDiscriminator> : IDiscriminatorMapping<T, TDiscriminator> {
 		private readonly IDictionary<string, object> customProperties = new Dictionary<string, object>();
@@ -23,7 +24,7 @@ namespace FluentLinqToSql.Mappings {
 		}
 
 		public IDiscriminatorMapping<T, TDiscriminator> BaseClassDiscriminatorValue(TDiscriminator discriminator) {
-			parentMapping.CustomProperties["InheritanceCode"] = discriminator;
+			parentMapping.CustomProperties[Constants.InheritanceCode] = discriminator;
 			return this;
 		}
 
@@ -34,8 +35,8 @@ namespace FluentLinqToSql.Mappings {
 		public IEnumerable<XElement> ToXml() {
 			//base class should be the inheritance default if it is not explicitly specified on one of the subclasses.
 
-			if (!mappings.Any(x => x.CustomProperties.ContainsKey("IsInheritanceDefault"))) {
-				parentMapping.CustomProperties["IsInheritanceDefault"] = "true";
+			if (!mappings.Any(x => x.CustomProperties.ContainsKey(Constants.IsInheritanceDefault))) {
+				parentMapping.CustomProperties[Constants.IsInheritanceDefault] = "true";
 			}
 
 			return mappings.SelectMany(x => x.ToXml());

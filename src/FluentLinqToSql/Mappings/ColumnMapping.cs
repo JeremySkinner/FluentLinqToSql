@@ -56,7 +56,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="property">The property that should be mapped</param>
 		public ColumnMapping(MemberInfo property) {
 			Property = property;
-			attributes["Member"] = Property.Name;
+			attributes[Constants.Member] = Property.Name;
 		}
 
 		/// <summary>
@@ -66,7 +66,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <returns></returns>
 		public IColumnMapping Named(string name) {
 			name.Guard("A name must be specified when calling 'Named'");
-			return SetAttribute("Name", name);
+			return SetAttribute(Constants.Name, name);
 		}
 
 		/// <summary>
@@ -86,7 +86,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="fieldName">Name of field that the column should be mapped to</param>
 		/// <returns></returns>
 		public IColumnMapping Storage(string fieldName) {
-			return SetAttribute("Storage", fieldName);
+			return SetAttribute(Constants.Storage, fieldName);
 		}
 
 		/// <summary>
@@ -96,7 +96,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="autoSync">The autosync value</param>
 		/// <returns></returns>
 		public IColumnMapping AutoSync(AutoSync autoSync) {
-			return SetAttribute("AutoSync", autoSync.ToString());
+			return SetAttribute(Constants.AutoSync, autoSync.ToString());
 		}
 
 		/// <summary>
@@ -104,7 +104,7 @@ namespace FluentLinqToSql.Mappings {
 		/// </summary>
 		/// <returns></returns>
 		public IColumnMapping NotNull() {
-			return SetAttribute("CanBeNull", "false");
+			return SetAttribute(Constants.CanBeNull, "false");
 		}
 
 		/// <summary>
@@ -113,7 +113,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="dbType">Data type for the column</param>
 		/// <returns></returns>
 		public IColumnMapping DbType(string dbType) {
-			return SetAttribute("DbType", dbType);
+			return SetAttribute(Constants.DbType, dbType);
 		}
 
 		/// <summary>
@@ -122,7 +122,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="expression">The expression that should be used to calculate the column</param>
 		/// <returns></returns>
 		public IColumnMapping Expression(string expression) {
-			return SetAttribute("Expression", expression);
+			return SetAttribute(Constants.Expression, expression);
 		}
 
 		/// <summary>
@@ -130,7 +130,7 @@ namespace FluentLinqToSql.Mappings {
 		/// </summary>
 		/// <returns></returns>
 		public IColumnMapping PrimaryKey() {
-			return SetAttribute("IsPrimaryKey", "true");
+			return SetAttribute(Constants.IsPrimaryKey, "true");
 		}
 
 		/// <summary>
@@ -138,7 +138,7 @@ namespace FluentLinqToSql.Mappings {
 		/// </summary>
 		/// <returns></returns>
 		public IColumnMapping Version() {
-			return SetAttribute("IsVersion", "true");
+			return SetAttribute(Constants.IsVersion, "true");
 		}
 
 		/// <summary>
@@ -150,7 +150,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="updateCheck">The UpdateCheck value to use</param>
 		/// <returns></returns>
 		public IColumnMapping UpdateCheck(UpdateCheck updateCheck) {
-			return SetAttribute("UpdateCheck", updateCheck.ToString());
+			return SetAttribute(Constants.UpdateCheck, updateCheck.ToString());
 		}
 
 		/// <summary>
@@ -158,7 +158,7 @@ namespace FluentLinqToSql.Mappings {
 		/// </summary>
 		/// <returns></returns>
 		public IColumnMapping DbGenerated() {
-			return SetAttribute("IsDbGenerated", "true");
+			return SetAttribute(Constants.IsDbGenerated, "true");
 		}
 
 		/// <summary>
@@ -168,11 +168,11 @@ namespace FluentLinqToSql.Mappings {
 		public IEnumerable<XElement> ToXml() {
 
 			//if no explict name has been specified, use the name of the property.
-			if(! attributes.ContainsKey("Name")) {
-				SetAttribute("Name", Property.Name);
+			if(! attributes.ContainsKey(Constants.Name)) {
+				SetAttribute(Constants.Name, Property.Name);
 			}
 
-			yield return new LinqElement("Column",
+			yield return new LinqElement(Constants.Column,
 			                             attributes.Select(attribute => new XAttribute(attribute.Key, attribute.Value))
 				);
 		}

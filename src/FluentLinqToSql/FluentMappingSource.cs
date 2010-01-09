@@ -89,7 +89,7 @@ namespace FluentLinqToSql {
 		/// Adds all mappings that can be located in the specified assembly
 		/// </summary>
 		/// <param name="assembly"></param>
-		public FluentMappingSource AddFromAssembly(Assembly assembly) {
+		public virtual FluentMappingSource AddFromAssembly(Assembly assembly) {
 			assembly.Guard("Cannot pass null to 'AddFromAssembly'");
 
 			var mappingObjects = from type in assembly.GetExportedTypes()
@@ -110,7 +110,7 @@ namespace FluentLinqToSql {
 		/// Adds all mappings from the assembly containing the specified type
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		public FluentMappingSource AddFromAssemblyContaining<T>() {
+		public virtual FluentMappingSource AddFromAssemblyContaining<T>() {
 			return AddFromAssembly(typeof(T).Assembly);
 		}
 

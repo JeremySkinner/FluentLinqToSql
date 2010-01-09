@@ -33,7 +33,7 @@ namespace FluentLinqToSql.Modifications {
 		/// <param name="mappings">The column mappings to which the modification should be applied.</param>
 		protected override void HandleColumnMappings(IEnumerable<IColumnMapping> mappings) {
 			mappings
-				.Where(mapping => ! mapping.Attributes.ContainsKey("Name"))
+				.Where(mapping => ! mapping.Attributes.ContainsKey(Constants.Name))
 				.ForEach(mapping => mapping.Named(Regex.Replace(mapping.Property.Name, "([A-Z])", "_$1").Trim('_')));
 		}
 	}

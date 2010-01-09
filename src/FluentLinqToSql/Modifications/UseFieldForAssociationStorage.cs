@@ -47,8 +47,8 @@ namespace FluentLinqToSql.Modifications {
 		}
 
 		private void ApplyStorageAttribute(IPropertyMapping mapping) {
-			if(! mapping.Attributes.ContainsKey("Storage")) {
-				mapping.Attributes["Storage"] = NameSpecifier(mapping);				
+			if(! mapping.Attributes.ContainsKey(Constants.Storage)) {
+				mapping.Attributes[Constants.Storage] = NameSpecifier(mapping);				
 			}
 		}
 

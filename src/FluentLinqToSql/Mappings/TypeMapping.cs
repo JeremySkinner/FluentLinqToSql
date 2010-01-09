@@ -37,8 +37,8 @@ namespace FluentLinqToSql.Mappings {
 		}
 
 		private string TypeName {
-			get { return customProperties["TypeName"].ToString(); }
-			set { customProperties["TypeName"] = value; }
+			get { return customProperties[Constants.TypeName].ToString(); }
+			set { customProperties[Constants.TypeName] = value; }
 		}
 
 		IList<IElementMapping> IMapping.Mappings {
@@ -170,7 +170,7 @@ namespace FluentLinqToSql.Mappings {
 				columnMapping = Map(propertySelector);
 			}
 			
-			columnMapping.Attributes["IsDiscriminator"] = "true";
+			columnMapping.Attributes[Constants.IsDiscriminator] = "true";
 
 			var discriminator = new DiscriminatorMapping<T, TProperty>(this);
 			columnMappings.Add(discriminator);
@@ -183,17 +183,17 @@ namespace FluentLinqToSql.Mappings {
 		/// <returns></returns>
 		public virtual IEnumerable<XElement> ToXml() {
 			var elem  = new LinqElement(
-				"Type",
-				new XAttribute("Name", TypeName),
+				Constants.Type,
+				new XAttribute(Constants.Name, TypeName),
 				columnMappings.Select(propertyMapping => propertyMapping.ToXml())
 			);
 
-			if(customProperties.ContainsKey("IsInheritanceDefault")) {
-				elem.Add(new XAttribute("IsInheritanceDefault", customProperties["IsInheritanceDefault"]));
+			if(customProperties.ContainsKey(Constants.IsInheritanceDefault)) {
+				elem.Add(new XAttribute(Constants.IsInheritanceDefault, customProperties[Constants.IsInheritanceDefault]));
 			}
 
-			if(customProperties.ContainsKey("InheritanceCode")) {
-				elem.Add(new XAttribute("InheritanceCode", customProperties["InheritanceCode"]));
+			if(customProperties.ContainsKey(Constants.InheritanceCode)) {
+				elem.Add(new XAttribute(Constants.InheritanceCode, customProperties[Constants.InheritanceCode]));
 			}
 
 			yield return elem;

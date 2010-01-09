@@ -51,7 +51,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="property">The property that represents the association</param>
 		public AssociationMapping(MemberInfo property) {
 			Property = property;
-			attributes["Member"] = Property.Name;
+			attributes[Constants.Member] = Property.Name;
 		}
 
 		/// <summary>
@@ -78,7 +78,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="name">Name of foreign key</param>
 		/// <returns></returns>
 		public IAssociationMapping<T, TElement> ForeignKeyName(string name) {
-			return SetAttribute("Name", name);
+			return SetAttribute(Constants.Name, name);
 		}
 
 		/// <summary>
@@ -91,7 +91,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="fieldName">Name of the field that should be used as storage</param>
 		/// <returns></returns>
 		public IAssociationMapping<T, TElement> Storage(string fieldName) {
-			return SetAttribute("Storage", fieldName);
+			return SetAttribute(Constants.Storage, fieldName);
 		}
 
 		/// <summary>
@@ -100,7 +100,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="deleteRule">String representing the rule</param>
 		/// <returns></returns>
 		public IAssociationMapping<T, TElement> DeleteRule(string deleteRule) {
-			return SetAttribute("DeleteRule", deleteRule);
+			return SetAttribute(Constants.DeleteRule, deleteRule);
 		}
 
 		/// <summary>
@@ -112,7 +112,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="keyName">Name of the property.</param>
 		/// <returns></returns>
 		public IAssociationMapping<T, TElement> ThisKey(string keyName) {
-			ConcatAttribute("ThisKey", keyName);
+			ConcatAttribute(Constants.ThisKey, keyName);
 			return this;
 		}
 
@@ -125,7 +125,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <param name="keyName">Name of the property</param>
 		/// <returns></returns>
 		public IAssociationMapping<T, TElement> OtherKey(string keyName) {
-			ConcatAttribute("OtherKey", keyName);
+			ConcatAttribute(Constants.OtherKey, keyName);
 			return this;
 		}
 
@@ -139,7 +139,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <returns></returns>
 		public IAssociationMapping<T, TElement> OtherKey(Expression<Func<TElement, object>> keyExpression) {
 			keyExpression.Guard("Null cannot be passed to OtherKey");
-			ConcatAttribute("OtherKey", keyExpression.GetPropertyName());
+			ConcatAttribute(Constants.OtherKey, keyExpression.GetPropertyName());
 			return this;
 		}
 
@@ -153,7 +153,7 @@ namespace FluentLinqToSql.Mappings {
 		/// <returns></returns>
 		public IAssociationMapping<T, TElement> ThisKey(Expression<Func<T, object>> keyExpression) {
 			keyExpression.Guard("Null cannot be passed to ThisKey");
-			ConcatAttribute("ThisKey", keyExpression.GetPropertyName());
+			ConcatAttribute(Constants.ThisKey, keyExpression.GetPropertyName());
 			return this;
 		}
 
@@ -173,7 +173,7 @@ namespace FluentLinqToSql.Mappings {
 		/// </summary>
 		/// <returns>XElement</returns>
 		public IEnumerable<XElement> ToXml() {
-			yield return new LinqElement("Association",
+			yield return new LinqElement(Constants.Association,
 			                             attributes.Select(attribute => new XAttribute(attribute.Key, attribute.Value))
 				);
 		}

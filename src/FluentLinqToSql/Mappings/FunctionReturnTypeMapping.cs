@@ -7,7 +7,7 @@ namespace FluentLinqToSql.Mappings {
 		public override System.Collections.Generic.IEnumerable<XElement> ToXml() {
 			var typeElement = base.ToXml().Single();
 
-			yield return new LinqElement("ElementType", 
+			yield return new LinqElement(Constants.ElementType, 
 				typeElement.Attributes(),
 				typeElement.Elements()
 			);

@@ -18,6 +18,7 @@
 
 namespace FluentLinqToSql.Mappings {
 	using System.Reflection;
+	using Internal;
 
 	/// <summary>
 	/// Mapping class that represents a many-to-one mapping.
@@ -29,7 +30,7 @@ namespace FluentLinqToSql.Mappings {
 		/// </summary>
 		/// <param name="property">The property that represents the association</param>
 		public BelongsToMapping(MemberInfo property) : base(property) {
-			SetAttribute("IsForeignKey", "true");			
+			SetAttribute(Constants.IsForeignKey, "true");			
 		}
 	}
 }
