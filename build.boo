@@ -57,6 +57,7 @@ target coverage:
   #ensure the other test assemblies are in the right place...
   System.IO.File.Copy(dbtest_assembly, "src/FluentLinqToSql.Tests/bin/${configuration}/FluentLinqToSql.DatabaseTests.dll", true)
   System.IO.File.Copy(artest_assembly, "src/FluentLinqToSql.Tests/bin/${configuration}/FluentLinqToSql.Tests.ActiveRecord.dll", true)
+  System.IO.File.Copy(artest_assembly + ".config", "src/FluentLinqToSql.Tests/bin/${configuration}/FluentLinqToSql.Tests.ActiveRecord.config", true)
 
 
   with ncover():

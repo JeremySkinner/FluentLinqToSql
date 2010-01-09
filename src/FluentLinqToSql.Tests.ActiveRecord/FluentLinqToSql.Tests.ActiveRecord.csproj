@@ -74,7 +74,8 @@
     <Compile Include="SaveTester.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+    </None>
     <None Include="Schema.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
