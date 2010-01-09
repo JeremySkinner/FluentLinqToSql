@@ -84,5 +84,26 @@ namespace FluentLinqToSql.Tests {
 			Assert.IsNull(source);
 		}
 
+		public static void ShouldNotBeNull(this object source) {
+			Assert.IsNotNull(source);
+		}
+
+		public static void ShouldNotBeTheSameAs(this object actual, object expected) {
+			Assert.AreNotSame(expected,actual);
+		}
+
+
+		public static void ShouldBeTheSameAs(this object actual, object expected) {
+			Assert.AreSame(expected,actual);
+		}
+
+		public static Exception ShouldBeThrownBy(this Type type, TestDelegate action) {
+			return Assert.Throws(type, action);
+		}
+
+		public static void ShouldBe<T>(this object source) {
+			Assert.IsInstanceOf<T>(source);
+		}
 	}
+
 }

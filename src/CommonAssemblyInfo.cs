@@ -17,6 +17,7 @@
 #endregion
 
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 [assembly : AssemblyTitle("FluentLinqToSql")]
 [assembly : AssemblyDescription("FluentLinqToSql")]
@@ -24,3 +25,4 @@ using System.Reflection;
 [assembly : AssemblyCopyright("Copyright © Jeremy Skinner 2008")]
 [assembly : AssemblyVersion("0.1.0.0")]
 [assembly : AssemblyFileVersion("0.1.0.0")]
+[assembly: InternalsVisibleTo("FluentLinqToSql.Tests.ActiveRecord")]

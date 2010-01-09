@@ -1,6 +1,7 @@
 configuration = "release"
 test_assembly = "src/FluentLinqToSql.Tests/bin/${configuration}/FluentLinqToSql.Tests.dll"
 dbtest_assembly = "src/FluentLinqToSql.DatabaseTests/bin/${configuration}/FluentLinqToSql.DatabaseTests.dll"
+artest_assembly = "src/FluentLinqToSql.Tests.ActiveRecord/bin/${configuration}/FluentLinqToSql.Tests.ActiveRecord.dll"
 dbtest_enabled = true
 
 target default, (init, compile, test, createDb, dbTest, deploy, package):
@@ -19,7 +20,7 @@ target compile:
   msbuild(file: "FluentLinqToSql.sln", configuration: "release")
 
 target test:
-  nunit(assembly: test_assembly)
+  nunit(toolPath: "lib/nunit/nunit-console-x86.exe", assemblies: (test_assembly, artest_assembly))
 
 target createDb:
   if not dbtest_enabled:
@@ -54,8 +55,10 @@ target coverage:
   app_assemblies = ("FluentLinqToSql",)
   teamcity_launcher = env("teamcity.dotnet.nunitlauncher")
   
-  #ensure the dbtest assembly is in the right place...
+  #ensure the other test assemblies are in the right place...
   System.IO.File.Copy(dbtest_assembly, "src/FluentLinqToSql.Tests/bin/${configuration}/FluentLinqToSql.DatabaseTests.dll", true)
+  System.IO.File.Copy(artest_assembly, "src/FluentLinqToSql.Tests/bin/${configuration}/FluentLinqToSql.Tests.ActiveRecord.dll", true)
+
 
   with ncover():
     .toolPath = "${ncover_path}/NCover.console.exe"
@@ -63,7 +66,7 @@ target coverage:
     .workingDirectory = "src/FluentLinqToSql.Tests/bin/${configuration}"
     .applicationAssemblies = app_assemblies
     .program = "${teamcity_launcher} v2.0 x86 NUnit-2.4.6"
-    .testAssembly = "FluentLinqToSql.Tests.dll;FluentLinqToSql.DatabaseTests.dll"
+    .testAssembly = "FluentLinqToSql.Tests.dll;FluentLinqToSql.DatabaseTests.dll;FluentLinqToSql.Tests.ActiveRecord.dll"
     .excludeAttributes = "System.Runtime.CompilerServices.CompilerGeneratedAttribute"
 
   with ncover_explorer():

@@ -40,6 +40,7 @@
       </FormatSettings>
       <UsingsSettings>
         <AddImportsToDeepestScope>True</AddImportsToDeepestScope>
+        <QualifiedUsingAtNestedScope>True</QualifiedUsingAtNestedScope>
       </UsingsSettings>
       <Naming2>
         <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>

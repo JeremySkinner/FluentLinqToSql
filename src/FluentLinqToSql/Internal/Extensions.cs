@@ -133,5 +133,21 @@ namespace FluentLinqToSql.Internal {
 				action(item);
 			}
 		}
+
+
+		public static Expression<Func<T, bool>> BuildIdExpression<T>(object id, string keyName) {
+			var parameter = Expression.Parameter(typeof(T), "x");
+
+			var expression = Expression.Lambda<Func<T, bool>>(
+				Expression.Equal(
+					Expression.Property(parameter, keyName),
+					Expression.Constant(id)
+				),
+				parameter
+			);
+
+			return expression;
+		}
+
 	}
 }

@@ -33,12 +33,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -52,6 +55,25 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ActiveRecord\ActiveRecord.cs" />
+    <Compile Include="ActiveRecord\ActiveRecordConfiguration.cs" />
+    <Compile Include="ActiveRecord\AutoMapping.cs" />
+    <Compile Include="ActiveRecord\AutoMappingSource.cs" />
+    <Compile Include="ActiveRecord\ColumnMetaData.cs" />
+    <Compile Include="ActiveRecord\ContextScope.cs" />
+    <Compile Include="ActiveRecord\Conventions\MappingConventions.cs" />
+    <Compile Include="ActiveRecord\Conventions\MappingCreationConvention.cs" />
+    <Compile Include="ActiveRecord\Conventions\MetaDataBuilderConvention.cs" />
+    <Compile Include="ActiveRecord\Conventions\PrimaryKeyBuilderConvention.cs" />
+    <Compile Include="ActiveRecord\Conventions\PropertySelectorConvention.cs" />
+    <Compile Include="ActiveRecord\Conventions\TableNameConvention.cs" />
+    <Compile Include="ActiveRecord\DefaultScopeStorage.cs" />
+    <Compile Include="ActiveRecord\Exceptions.cs" />
+    <Compile Include="ActiveRecord\IScopeStorage.cs" />
+    <Compile Include="ActiveRecord\NotMappedAttribute.cs" />
+    <Compile Include="ActiveRecord\ScopeStorageModule.cs" />
+    <Compile Include="ActiveRecord\StaticScopeStorage.cs" />
+    <Compile Include="ActiveRecord\WebScopeStorage.cs" />
     <Compile Include="FluentMappingSource.cs" />
     <Compile Include="FunctionMapping.cs" />
     <Compile Include="Internal\Constants.cs" />
