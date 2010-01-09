@@ -31,7 +31,7 @@ namespace FluentLinqToSql {
 	/// <summary>
 	/// Fluent Mapping source
 	/// </summary>
-	public class FluentMappingSource : IEnumerable<IMapping> {
+	public class FluentMappingSource : MappingSource, IEnumerable<IMapping>  {
 		private readonly Dictionary<Type, IMapping> mappings = new Dictionary<Type, IMapping>();
 		private readonly List<IMappingModification> modifications = new List<IMappingModification>();
 		private readonly string databaseName;
@@ -48,8 +48,10 @@ namespace FluentLinqToSql {
 		/// Creates an XmlMappingSource generated from the fluent mapping information
 		/// </summary>
 		/// <returns>An XmlMappingSource object</returns>
-		public virtual XmlMappingSource CreateMappingSource() {
-			return XmlMappingSource.FromXml(CreateDocument().ToString());
+		[Obsolete]
+		public virtual MappingSource CreateMappingSource() {
+			//return XmlMappingSource.FromXml(CreateDocument().ToString());
+			return this;
 		}
 
 		/// <summary>
@@ -122,15 +124,6 @@ namespace FluentLinqToSql {
 		}
 
 		/// <summary>
-		/// Allows a FluentMappingSource to be converted to a Linq to Sql MappingSource object.
-		/// </summary>
-		/// <param name="fluentMappingSource">The fluent mapping source to convert</param>
-		/// <returns>The generated XmlMappingSource</returns>
-		public static implicit operator MappingSource(FluentMappingSource fluentMappingSource) {
-			return fluentMappingSource.CreateMappingSource();
-		}
-
-		/// <summary>
 		/// Returns an enumerator of IMapping objects that iterates through the collection.
 		/// </summary>
 		/// <returns></returns>
@@ -149,6 +142,11 @@ namespace FluentLinqToSql {
 		/// <returns>Mapping</returns>
 		public IMapping this[Type entityType] {
 			get { return mappings[entityType]; }
+		}
+
+		protected override MetaModel CreateModel(Type dataContextType) {
+			var xml = XmlMappingSource.FromXml(CreateDocument().ToString());
+			return xml.GetModel(dataContextType);
 		}
 	}
 }

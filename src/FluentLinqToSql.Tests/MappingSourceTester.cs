@@ -18,6 +18,7 @@
 
 namespace FluentLinqToSql.Tests {
 	using System;
+	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using System.Linq;
 	using Mappings;
@@ -47,12 +48,6 @@ namespace FluentLinqToSql.Tests {
 		}
 
 		[Test]
-		public void Should_convert_to_XmlMappingSource() {
-			MappingSource linqMappingSource = source; //implicit operator conversion
-			Assert.IsInstanceOf<XmlMappingSource>(linqMappingSource);
-		}
-
-		[Test]
 		public void AddFromAssembly_should_throw_when_assembly_is_null() {
 			Assert.Throws<ArgumentNullException>(() => source.AddFromAssembly(null));
 		}
@@ -79,7 +74,7 @@ namespace FluentLinqToSql.Tests {
 		[Test]
 		public void Should_apply_modifications() {
 			source.AddModification(new TestModification());
-			source.CreateMappingSource();
+			source.GetModel(typeof(DataContext)); //CreateMappingSource();
 
 			Assert.That(source.First().CustomProperties["foo"], Is.EqualTo("bar"));
 		}
