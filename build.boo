@@ -26,7 +26,9 @@ target createDb:
     print "Skipping database creation"
     return
   print "Trying to create test db"
-  nunit(assembly: dbtest_assembly, include: "CreateDatabase")
+  #nunit(assembly: dbtest_assembly, include: "CreateDatabase")
+  exec("lib/Tarantino/DatabaseDeployer.exe", "Rebuild (local) FluentLinqToSql db")
+    
   print "Test database created"
 
 target dbTest:

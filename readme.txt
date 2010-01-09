@@ -21,6 +21,10 @@ mappingSource.AddFromAssemblyContaining<CustomerMapping>();
 var dataContext = new DataContext("connection-string", mappingSource);
 var customers = from c in dataContext.GetTable<Customer>() select c;
 
+Note that if you want to run the unit tests for this project, 
+you'll fist need to create a local SQL Server database called "FluentLinqToSql".
+This can be achieved by running BuildDatabase.cmd
+
 Copyright Jeremy Skinner 
 http://www.jeremyskinner.co.uk
 

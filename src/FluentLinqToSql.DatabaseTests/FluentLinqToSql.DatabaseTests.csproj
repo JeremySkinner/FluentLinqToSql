@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseCreator.cs" />
     <Compile Include="DatabaseTest.cs" />
     <Compile Include="Entities\CustomerContact.cs" />
     <Compile Include="Entities\CustomerOrderCount.cs" />
