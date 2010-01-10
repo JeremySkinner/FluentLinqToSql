@@ -28,6 +28,13 @@ public class Customer {
   public string Name { get; set; } //all public read/write properties auto-mapped to db cols
 }
  
+ //config:
+ActiveRecordConfiguration.Configure(cfg => {
+   cfg.ConnectToSqlServer("(local)", "mydb", "user", "pass");
+   cfg.MapTypesFromAssemblyContaining<Customer>();
+   //lots of other options...
+});
+ 
 //usage:
 using(ContextScope.Begin()) { //in a web app, this can be transparent using a scope per request
   var customer = new Customer { Name = "Jeremy" };
