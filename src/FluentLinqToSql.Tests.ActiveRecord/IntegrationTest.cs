@@ -56,6 +56,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord
 
 			ActiveRecordConfiguration.Configure(cfg => {
 				cfg.ConnectionStringIs(conn);
+				MapTypes(cfg);
 				cfg.MapTypesFromAssemblyContaining<Customer>();
 				cfg.DataContextFactory((c, m) => {
 					return new DataContext(connection, m);
@@ -64,11 +65,22 @@ namespace FluentLinqToSql.Tests.ActiveRecord
 //			Setup();
 		}
 
+		protected virtual void MapTypes(IActiveRecordConfiguration cfg) {
+			cfg.MapTypesFromAssemblyContaining<Customer>();
+		}
+
 		public virtual void Setup() { }
 
 		[TestFixtureTearDown]
 		public void BaseTearDown() {
 			ActiveRecordConfiguration.Reset();
+
+			var deleteCmd = connection.CreateCommand();
+			deleteCmd.CommandText = "delete from Customer";
+			deleteCmd.ExecuteNonQuery();
+			deleteCmd.CommandText = "delete from Customer2";
+			deleteCmd.ExecuteNonQuery();
+
 			connection.Close();
 			connection.Dispose();
 		}

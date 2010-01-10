@@ -79,3 +79,6 @@ target coverage:
     .toolPath = "${ncover_path}/NCoverExplorer.console.exe"
     .project = "FluentLinqToSql"
     .reportDirectory = "build/coverage"
+    
+target foo:
+  print System.IO.FileInfo(".").FullName

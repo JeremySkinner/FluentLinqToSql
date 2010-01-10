@@ -1,6 +1,7 @@
 namespace FluentLinqToSql.ActiveRecord
 {
 	using System;
+	using System.Data.Linq;
 	using System.Linq;
 	using FluentLinqToSql.Internal;
 
@@ -46,6 +47,25 @@ namespace FluentLinqToSql.ActiveRecord
 				return keys[0].Member.Name;
 			}
 			return null;
+		}
+
+		public virtual void Validate() {
+			var validator = GetValidator();
+			var result = validator.Validate(this);
+
+			if(! result.IsValid) {
+				throw new ValidationException(typeof(TEntity), result);
+			}
+		}
+
+		protected virtual IValidator GetValidator() {
+			return ActiveRecordConfiguration.Current.ValidatorFactory(typeof(TEntity));
+		}
+
+		protected virtual void OnValidate(ChangeAction action) {
+			if(action == ChangeAction.Insert || action == ChangeAction.Update) {
+				Validate();
+			}
 		}
 	}
 }

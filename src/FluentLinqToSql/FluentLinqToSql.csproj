@@ -33,6 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -60,19 +63,24 @@
     <Compile Include="ActiveRecord\AutoMapping.cs" />
     <Compile Include="ActiveRecord\AutoMappingSource.cs" />
     <Compile Include="ActiveRecord\ColumnMetaData.cs" />
-    <Compile Include="ActiveRecord\ContextScope.cs" />
+    <Compile Include="ActiveRecord\ContextScopeBase.cs" />
     <Compile Include="ActiveRecord\Conventions\MappingConventions.cs" />
     <Compile Include="ActiveRecord\Conventions\MappingCreationConvention.cs" />
     <Compile Include="ActiveRecord\Conventions\MetaDataBuilderConvention.cs" />
     <Compile Include="ActiveRecord\Conventions\PrimaryKeyBuilderConvention.cs" />
     <Compile Include="ActiveRecord\Conventions\PropertySelectorConvention.cs" />
     <Compile Include="ActiveRecord\Conventions\TableNameConvention.cs" />
+    <Compile Include="ActiveRecord\DataAnnotationsValidator.cs" />
     <Compile Include="ActiveRecord\DefaultScopeStorage.cs" />
     <Compile Include="ActiveRecord\Exceptions.cs" />
     <Compile Include="ActiveRecord\IScopeStorage.cs" />
+    <Compile Include="ActiveRecord\IValidator.cs" />
     <Compile Include="ActiveRecord\NotMappedAttribute.cs" />
     <Compile Include="ActiveRecord\ScopeStorageModule.cs" />
     <Compile Include="ActiveRecord\StaticScopeStorage.cs" />
+    <Compile Include="ActiveRecord\ValidationError.cs" />
+    <Compile Include="ActiveRecord\ValidationException.cs" />
+    <Compile Include="ActiveRecord\ValidationResult.cs" />
     <Compile Include="ActiveRecord\WebScopeStorage.cs" />
     <Compile Include="FluentMappingSource.cs" />
     <Compile Include="FunctionMapping.cs" />

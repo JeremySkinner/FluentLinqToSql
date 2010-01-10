@@ -23,6 +23,7 @@ namespace FluentLinqToSql.ActiveRecord {
 			DataContextFactory = (connString, mappingSource) => new DataContext(connString, mappingSource);
 			ScopeStorage = new DefaultScopeStorage();
 			mappingConventions = new MappingConventions();
+			ValidatorFactory = type => new DataAnnotationsValidator(type);
 		}
 
 		public static void Configure(Action<IActiveRecordConfiguration> configurator) {
@@ -59,6 +60,7 @@ namespace FluentLinqToSql.ActiveRecord {
 
 		public string ConnectionString { get; private set; }
 		public DataContextFactory DataContextFactory { get; private set; }
+		public ValidatorFactory ValidatorFactory { get; private set; }
 
 		internal IScopeStorage ScopeStorage { get; private set; }
 
@@ -119,6 +121,10 @@ namespace FluentLinqToSql.ActiveRecord {
 			ConnectionString = string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={3};", server, database, user, password);
 		}
 
+		void IActiveRecordConfiguration.ValidatorFactory(ValidatorFactory factory) {
+			ValidatorFactory = factory;
+		}
+
 		internal DataContext CreateContext(Type contextType) {
 			if(contextType != typeof(DataContext)) {
 				throw new NotImplementedException("Multiple context types aren't currently supported");
@@ -132,6 +138,7 @@ namespace FluentLinqToSql.ActiveRecord {
 	}
 
 	public delegate DataContext DataContextFactory(string connectionString, MappingSource mappingSource);
+	public delegate IValidator ValidatorFactory(Type typeToValidate);
 
 	public interface IActiveRecordConfiguration {
 		void ConnectionStringIs(string connectionString);
@@ -145,6 +152,8 @@ namespace FluentLinqToSql.ActiveRecord {
 		void MappingSource(MappingSource source);
 		void ConnectToSqlServer(string server, string database);
 		void ConnectToSqlServer(string server, string database, string user, string password);
+		void ValidatorFactory(ValidatorFactory factory);
+
 		MappingConventions Conventions { get; }
 	}
 }

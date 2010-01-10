@@ -44,15 +44,15 @@ namespace FluentLinqToSql.ActiveRecord {
 		}
 	}
 
-	public abstract class ContextScope<TContext> : ContextScopeBase where TContext : DataContext {
-		protected ContextScope() : base(typeof(TContext)) {
+	public abstract class ContextScopeBase<TContext> : ContextScopeBase where TContext : DataContext {
+		protected ContextScopeBase() : base(typeof(TContext)) {
 		}
 
 		public new TContext Context {
 			get { return (TContext) base.Context; }
 		}
 
-		public static ContextScope<TContext> Current {
+		public static ContextScopeBase<TContext> Current {
 			get {
 				var currentScope = ScopeStorage.GetScope(typeof(TContext));
 
@@ -60,7 +60,7 @@ namespace FluentLinqToSql.ActiveRecord {
 					throw new InvalidOperationException("There is no current context scope. Did you forget to call ContextScope.Begin() ?");
 				}
 
-				return (ContextScope<TContext>) currentScope;
+				return (ContextScopeBase<TContext>) currentScope;
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace FluentLinqToSql.ActiveRecord {
 		}
 	}
 
-	public sealed class ContextScope : ContextScope<DataContext> {
+	public sealed class ContextScope : ContextScopeBase<DataContext> {
 		public static ContextScope Begin() {
 			return new ContextScope();
 		}
