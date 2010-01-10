@@ -69,6 +69,7 @@
     <Compile Include="Conventions\TableNameConventionTester.cs" />
     <Compile Include="DefaultConvertibleTests.cs" />
     <Compile Include="DeleteTester.cs" />
+    <Compile Include="FakeDataTester.cs" />
     <Compile Include="FindAllTester.cs" />
     <Compile Include="FindByIdTester.cs" />
     <Compile Include="IntegrationTest.cs" />

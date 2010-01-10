@@ -1,53 +1,34 @@
 namespace FluentLinqToSql.ActiveRecord
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Collections.Specialized;
 	using System.Data.Linq;
 	using System.Linq;
 	using FluentLinqToSql.Internal;
+	using FluentLinqToSql.TestHelper;
 
 	public interface IActiveRecord { }
 
 	public class ActiveRecord<TEntity> : IActiveRecord where TEntity : ActiveRecord<TEntity>
 	{
+		internal static IDataAccess<TEntity> dataAccess = new DefaultDataAccess<TEntity>();
+
 		public static TEntity FindById(object id) {
-			var context = ContextScope.Current.Context;
-			var keyName = GetKeyName(context.GetType());
-
-			if(string.IsNullOrEmpty(keyName)) {
-				throw new NotSupportedException("FindById is not supported for entities that do not have a single-column primary key. Please use FindAll with a SingleOrDefault clause instead.");
-			}
-
-			var idExpression = Extensions.BuildIdExpression<TEntity>(id, keyName);
-
-			return context.GetTable<TEntity>()
-				.SingleOrDefault(idExpression);
+			return dataAccess.FindById(id);
 		}
 
 		public static IQueryable<TEntity> FindAll() {
-			var context = ContextScope.Current.Context;
-			return context.GetTable<TEntity>();
+			return dataAccess.FindAll();
 		}
 
 		public void Save() {
-			var context = ContextScope.Current.Context;
-			context.GetTable<TEntity>().InsertOnSubmit((TEntity) this);
+			dataAccess.Save((TEntity)this);
+			
 		}
 
 		public void Delete() {
-			var context = ContextScope.Current.Context;
-			context.GetTable<TEntity>().DeleteOnSubmit((TEntity) this);
-		}
-
-		private static string GetKeyName(Type contextType) {
-			var keys = ActiveRecordConfiguration.Current.MappingSource.GetModel(contextType)
-				.GetMetaType(typeof(TEntity))
-				.DataMembers.Where(x => x.IsPrimaryKey).ToList();
-
-			if(keys.Count == 1) {
-				return keys[0].Member.Name;
-			}
-			return null;
+			dataAccess.Delete((TEntity)this);
 		}
 
 		public virtual void Validate() {
@@ -67,6 +48,14 @@ namespace FluentLinqToSql.ActiveRecord
 			if(action == ChangeAction.Insert || action == ChangeAction.Update) {
 				Validate();
 			}
+		}
+
+		public static IDisposable Fake(params TEntity[] fakes) {
+			return Fake((IEnumerable<TEntity>)fakes);
+		}
+
+		public static IDisposable Fake(IEnumerable<TEntity> fakes) {
+			return new FakeDataScope<TEntity>(fakes);
 		}
 	}
 }

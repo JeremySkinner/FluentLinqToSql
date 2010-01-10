@@ -8,25 +8,7 @@ namespace FluentLinqToSql.ActiveRecord.Conventions {
 	public class PrimaryKeyBuilderConvention {
 
 		public virtual IEnumerable<IColumnMapping> CreateColumnMappings(Type type, IEnumerable<ColumnMetaData> mappableProperties) {
-			var pkMembers = FindMembersWithAppropriateColumnAttribute(mappableProperties);
-
-			if (pkMembers.Count == 0) {
-				var id = mappableProperties.SingleOrDefault(x => x.Member.Name == "Id");
-
-				if (id == null) {
-					throw new InvalidOperationException(string.Format("Could not find a public instance property called 'Id' on type '{0}' with public a public getter and setter.", type.Name));
-				}
-
-
-				if(id.Attribute == null) {
-					id.Attribute = new ColumnAttribute() { IsDbGenerated = true, IsPrimaryKey = true };
-				}
-				else if(! id.Attribute.IsPrimaryKey) {
-					id.Attribute.IsPrimaryKey=true;
-				}
-
-				pkMembers.Add(id);
-			}
+			var pkMembers = GetPrimaryKeyColumns(type, mappableProperties);
 
 			return pkMembers
 				.Select(meta => CreateColumnMapping(meta))
@@ -46,6 +28,30 @@ namespace FluentLinqToSql.ActiveRecord.Conventions {
 			            select member;
 
 			return query.ToList();
+		}
+
+		public virtual IEnumerable<ColumnMetaData> GetPrimaryKeyColumns(Type type, IEnumerable<ColumnMetaData> mappableProperties) {
+			var pkMembers = FindMembersWithAppropriateColumnAttribute(mappableProperties);
+
+			if (pkMembers.Count == 0) {
+				var id = mappableProperties.SingleOrDefault(x => x.Member.Name == "Id");
+
+				if (id == null) {
+					throw new InvalidOperationException(string.Format("Could not find a public instance property called 'Id' on type '{0}' with public a public getter and setter.", type.Name));
+				}
+
+
+				if (id.Attribute == null) {
+					id.Attribute = new ColumnAttribute() { IsDbGenerated = true, IsPrimaryKey = true };
+				}
+				else if (!id.Attribute.IsPrimaryKey) {
+					id.Attribute.IsPrimaryKey = true;
+				}
+
+				pkMembers.Add(id);
+			}
+
+			return pkMembers;
 		}
 	}
 }

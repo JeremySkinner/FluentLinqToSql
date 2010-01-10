@@ -73,6 +73,7 @@
     <Compile Include="ActiveRecord\DataAnnotationsValidator.cs" />
     <Compile Include="ActiveRecord\DefaultScopeStorage.cs" />
     <Compile Include="ActiveRecord\Exceptions.cs" />
+    <Compile Include="ActiveRecord\IDataAccess.cs" />
     <Compile Include="ActiveRecord\IScopeStorage.cs" />
     <Compile Include="ActiveRecord\IValidator.cs" />
     <Compile Include="ActiveRecord\NameValueDeserializer.cs" />
@@ -117,12 +118,14 @@
     <Compile Include="Mappings\IMapping.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="Private.cs" />
+    <Compile Include="TestHelper\FakeDataScope.cs" />
     <Compile Include="TestHelper\MappingException.cs" />
     <Compile Include="TestHelper\MappingTester.cs" />
     <Compile Include="Modifications\MappingModification.cs" />
     <Compile Include="Modifications\UseFieldForAssociationStorage.cs" />
     <Compile Include="Internal\LinqElement.cs" />
     <Compile Include="Modifications\ReplacePascalCaseWithUnderscoreModification.cs" />
+    <Compile Include="TestHelper\FakeDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
