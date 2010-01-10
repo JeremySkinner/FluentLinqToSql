@@ -1,5 +1,6 @@
 namespace FluentLinqToSql.Tests.ActiveRecord {
 	using System.Collections.Specialized;
+	using FluentLinqToSql.ActiveRecord;
 	using FluentLinqToSql.Tests.ActiveRecord.Model;
 	using NUnit.Framework;
 

@@ -68,17 +68,5 @@ namespace FluentLinqToSql.ActiveRecord
 				Validate();
 			}
 		}
-
-		public TEntity UpdateFrom(NameValueCollection collection) {
-			var deserializer = new NameValueDeserializer();
-			deserializer.Deserialize(collection, null, GetType(), this);
-			return (TEntity)this;
-		}
-
-		public TEntity UpdateFrom(NameValueCollection collection, string prefix) {
-			var deserializer = new NameValueDeserializer();
-			deserializer.Deserialize(collection, prefix, GetType(), this);
-			return (TEntity)this;
-		}
 	}
 }

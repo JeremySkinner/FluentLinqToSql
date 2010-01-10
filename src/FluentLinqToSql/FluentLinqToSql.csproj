@@ -79,6 +79,7 @@
     <Compile Include="ActiveRecord\NotMappedAttribute.cs" />
     <Compile Include="ActiveRecord\ScopeStorageModule.cs" />
     <Compile Include="ActiveRecord\StaticScopeStorage.cs" />
+    <Compile Include="ActiveRecord\UpdateFromExtensions.cs" />
     <Compile Include="ActiveRecord\ValidationError.cs" />
     <Compile Include="ActiveRecord\ValidationException.cs" />
     <Compile Include="ActiveRecord\ValidationResult.cs" />
