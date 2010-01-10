@@ -75,6 +75,7 @@
     <Compile Include="ActiveRecord\Exceptions.cs" />
     <Compile Include="ActiveRecord\IScopeStorage.cs" />
     <Compile Include="ActiveRecord\IValidator.cs" />
+    <Compile Include="ActiveRecord\NameValueDeserializer.cs" />
     <Compile Include="ActiveRecord\NotMappedAttribute.cs" />
     <Compile Include="ActiveRecord\ScopeStorageModule.cs" />
     <Compile Include="ActiveRecord\StaticScopeStorage.cs" />

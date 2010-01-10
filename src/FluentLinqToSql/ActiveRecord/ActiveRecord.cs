@@ -1,6 +1,7 @@
 namespace FluentLinqToSql.ActiveRecord
 {
 	using System;
+	using System.Collections.Specialized;
 	using System.Data.Linq;
 	using System.Linq;
 	using FluentLinqToSql.Internal;
@@ -66,6 +67,18 @@ namespace FluentLinqToSql.ActiveRecord
 			if(action == ChangeAction.Insert || action == ChangeAction.Update) {
 				Validate();
 			}
+		}
+
+		public TEntity UpdateFrom(NameValueCollection collection) {
+			var deserializer = new NameValueDeserializer();
+			deserializer.Deserialize(collection, null, GetType(), this);
+			return (TEntity)this;
+		}
+
+		public TEntity UpdateFrom(NameValueCollection collection, string prefix) {
+			var deserializer = new NameValueDeserializer();
+			deserializer.Deserialize(collection, prefix, GetType(), this);
+			return (TEntity)this;
 		}
 	}
 }
