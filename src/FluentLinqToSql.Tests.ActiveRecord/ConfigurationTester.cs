@@ -18,7 +18,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void SetsConnectionString() {
 			ActiveRecordConfiguration.Configure(x => {
 				x.ConnectionStringIs("foo");
-				x.MapTypes(typeof(Customer));
+//				x.MapTypes(typeof(Customer));
 			});
 
 			ActiveRecordConfiguration.Current.ConnectionString.ShouldEqual("foo");
@@ -28,7 +28,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void SetsConnectionStringFromConfig() {
 			ActiveRecordConfiguration.Configure(x => {
 				x.ConnectionStringFromConfigFile("foo");
-				x.MapTypes(typeof(Customer));
+//				x.MapTypes(typeof(Customer));
 			});
 
 			ActiveRecordConfiguration.Current.ConnectionString.ShouldEqual("bar");
@@ -38,7 +38,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void SetsCustomScopeStorage() {
 			ActiveRecordConfiguration.Configure(x => {
 				x.ConnectionStringIs("foo");
-				x.MapTypes(typeof(Customer));
+//				x.MapTypes(typeof(Customer));
 				x.ScopeStorage(new TestScopeStorage());
 			});
 
@@ -50,28 +50,19 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 			DataContextFactory contextFactory = (connectionString, source) => null;
 			ActiveRecordConfiguration.Configure(x => {
 				x.ConnectionStringIs("foo");
-				x.MapTypes(typeof(Customer));
+//				x.MapTypes(typeof(Customer));
 				x.DataContextFactory(contextFactory);
 			});
 
 			ActiveRecordConfiguration.Current.DataContextFactory.ShouldBeTheSameAs(contextFactory);
 		}
 
-		[Test]
-		public void DefaultMappingSourceShouldBeInferred() {
-			ActiveRecordConfiguration.Configure(x => {
-				x.ConnectionStringIs("foo");
-				x.MapTypes(typeof(Customer));
-			});
-
-			ActiveRecordConfiguration.Current.MappingSource.ShouldBe<AutoMappingSource>();
-		}
-
+	
 		[Test]
 		public void SetsMappingSource() {
 			ActiveRecordConfiguration.Configure(x => {
 				x.ConnectionStringIs("foo");
-				x.MapTypes(typeof(Customer));
+//				x.MapTypes(typeof(Customer));
 				x.MappingSource(new AttributeMappingSource());
 			});
 
@@ -83,7 +74,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void BuildsConnectionStringUsingServerName() {
 			ActiveRecordConfiguration.Configure(x => {
 				x.ConnectToSqlServer("server", "database");
-				x.MapTypes(typeof(Customer));
+//				x.MapTypes(typeof(Customer));
 			});
 
 			ActiveRecordConfiguration.Current.ConnectionString.ShouldEqual("Data Source=server;Initial Catalog=database;Integrated Security=SSPI;");
@@ -94,7 +85,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void BuildsConnectionStringUsingServerNameUserAndPassword() {
 			ActiveRecordConfiguration.Configure(x => {
 				x.ConnectToSqlServer("server", "database", "user", "password");
-				x.MapTypes(typeof(Customer));
+//				x.MapTypes(typeof(Customer));
 			});
 
 			ActiveRecordConfiguration.Current.ConnectionString.ShouldEqual("Data Source=server;Initial Catalog=database;User ID=user;Password=password;");

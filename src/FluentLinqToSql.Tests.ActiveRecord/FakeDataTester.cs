@@ -28,7 +28,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void Setup() {
 			ActiveRecordConfiguration.Configure(x => {
 				x.ConnectionStringIs("foo");
-				x.MapTypes(typeof(Customer));
+//				x.MapTypes(typeof(Customer));
 			});
 		}
 

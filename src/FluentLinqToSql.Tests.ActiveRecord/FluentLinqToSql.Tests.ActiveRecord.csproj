@@ -63,10 +63,6 @@
     <Compile Include="ConfigurationTester.cs" />
     <Compile Include="ContextScopeTester.cs" />
     <Compile Include="ConventionOverrideTester.cs" />
-    <Compile Include="Conventions\MappedPropertiesConventionTester.cs" />
-    <Compile Include="Conventions\MetaDataBuilderConventionTester.cs" />
-    <Compile Include="Conventions\PrimaryKeyBuilderConventionTester.cs" />
-    <Compile Include="Conventions\TableNameConventionTester.cs" />
     <Compile Include="DefaultConvertibleTests.cs" />
     <Compile Include="DeleteTester.cs" />
     <Compile Include="FakeDataTester.cs" />

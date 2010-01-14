@@ -57,7 +57,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord
 			ActiveRecordConfiguration.Configure(cfg => {
 				cfg.ConnectionStringIs(conn);
 				MapTypes(cfg);
-				cfg.MapTypesFromAssemblyContaining<Customer>();
+//				cfg.MapTypesFromAssemblyContaining<Customer>();
 				cfg.DataContextFactory((c, m) => {
 					return new DataContext(connection, m);
 				});
@@ -66,7 +66,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord
 		}
 
 		protected virtual void MapTypes(IActiveRecordConfiguration cfg) {
-			cfg.MapTypesFromAssemblyContaining<Customer>();
+//			cfg.MapTypesFromAssemblyContaining<Customer>();
 		}
 
 		public virtual void Setup() { }

@@ -11,7 +11,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void ThrowsWhenNoCurrentScope() {
 			ActiveRecordConfiguration.Configure(c => {
 				c.ConnectionStringIs("foo");
-				c.MapTypes(typeof(Customer));
+				//c.MapTypes(typeof(Customer));
 			});
 
 			typeof(InvalidOperationException).ShouldBeThrownBy(() => { var x = ContextScope.Current; });
@@ -21,7 +21,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void SetsCurrentScope() {
 			ActiveRecordConfiguration.Configure(c => {
 				c.ConnectionStringIs("foo");
-				c.MapTypes(typeof(Customer));
+				//c.MapTypes(typeof(Customer));
 			});
 
 			using(var scope = new ContextScope()) {
@@ -33,7 +33,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void CreatesContext() {
 			ActiveRecordConfiguration.Configure(c => {
 				c.ConnectionStringIs("foo");
-				c.MapTypes(typeof(Customer));
+				//c.MapTypes(typeof(Customer));
 			});
 
 			using (new ContextScope()) {
@@ -45,7 +45,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void UsesAlternativeScopeStorage() {
 			ActiveRecordConfiguration.Configure(c => {
 				c.ConnectionStringIs("foo");
-				c.MapTypes(typeof(Customer));
+				//c.MapTypes(typeof(Customer));
 				c.ScopeStorage(new TestScopeStorage());
 			});
 
@@ -58,7 +58,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void CleansUpScope() {
 			ActiveRecordConfiguration.Configure(c => {
 				c.ConnectionStringIs("foo");
-				c.MapTypes(typeof(Customer));
+				//c.MapTypes(typeof(Customer));
 				c.ScopeStorage(new TestScopeStorage());
 			});
 

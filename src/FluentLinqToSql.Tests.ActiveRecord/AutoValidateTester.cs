@@ -25,8 +25,10 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 
 		[Table(Name = "Customer")]
 		public class ValidatingCustomer : ActiveRecord<ValidatingCustomer> {
+			[Column(IsPrimaryKey = true, IsDbGenerated = true)]
 			public int Id { get; set; }
-			[Required]
+
+			[Required, Column]
 			public string Name { get; set; }
 
 			protected override void OnValidate(System.Data.Linq.ChangeAction action) {
@@ -35,7 +37,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		}
 
 		protected override void MapTypes(IActiveRecordConfiguration cfg) {
-			cfg.MapTypes(typeof(ValidatingCustomer));
+//			cfg.MapTypes(typeof(ValidatingCustomer));
 		}
 
 	}
