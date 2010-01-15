@@ -91,7 +91,7 @@ namespace FluentLinqToSql.TestHelper {
 		/// <summary>
 		/// Verifies that all properties have been mapped successfully.
 		/// </summary>
-		public void Verify() {
+		public T Verify() {
 			var first = new T();
 			var table = GetTableForType(typeof(T));
 
@@ -114,6 +114,8 @@ namespace FluentLinqToSql.TestHelper {
 			System.Diagnostics.Debug.Assert(!ReferenceEquals(first, second));
 
 			propertyValues.ForEach(prop => prop.Verify(second));
+
+			return second;
 		}
 
 		private interface IPropertyValue<TEntity> {
