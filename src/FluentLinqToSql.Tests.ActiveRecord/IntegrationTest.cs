@@ -66,7 +66,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord
 		}
 
 		protected virtual void MapTypes(IActiveRecordConfiguration cfg) {
-//			cfg.MapTypesFromAssemblyContaining<Customer>();
+			cfg.MapTypesFromAssemblyContaining<Customer>();
 		}
 
 		public virtual void Setup() { }

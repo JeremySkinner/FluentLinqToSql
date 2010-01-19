@@ -4,11 +4,12 @@ namespace FluentLinqToSql.ActiveRecord {
 	using System.Configuration;
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
+	using System.Linq;
 	using System.Reflection;
 
 	public class ActiveRecordConfiguration : IActiveRecordConfiguration {
 		static ActiveRecordConfiguration current;
-
+		
 		public static ActiveRecordConfiguration Current {
 			get {
 				if (current == null) {
@@ -22,7 +23,7 @@ namespace FluentLinqToSql.ActiveRecord {
 			DataContextFactory = (connString, mappingSource) => new DataContext(connString, mappingSource);
 			ScopeStorage = new DefaultScopeStorage();
 			ValidatorFactory = type => new DataAnnotationsValidator(type);
-			mappingSourceBuilder = () => new AttributeMappingSource();
+			mappingSourceBuilder = () =>  new AttributeMappingSource();
 		}
 
 		public static void Configure(Action<IActiveRecordConfiguration> configurator) {
@@ -57,6 +58,7 @@ namespace FluentLinqToSql.ActiveRecord {
 			current = null;
 		}
 
+		MappingConventions conventions = new MappingConventions();
 		public string ConnectionString { get; private set; }
 		public DataContextFactory DataContextFactory { get; private set; }
 		public ValidatorFactory ValidatorFactory { get; private set; }
@@ -83,6 +85,27 @@ namespace FluentLinqToSql.ActiveRecord {
 			ScopeStorage = storage;
 		}
 
+		public void MapTypes(IEnumerable<Type> types) {
+			Predicate<Type> predicate = x => typeof(ActiveRecord).IsAssignableFrom(x);
+			mappingSourceBuilder = () => {
+				var maps = new ConventionMappingSource(predicate, conventions);
+				maps.AddTypes(types);
+				return maps;
+			};
+		}
+
+		public void MapTypes(params Type[] types) {
+			MapTypes((IEnumerable<Type>)types);
+		}
+
+		public void MapTypesFromAssembly(Assembly assembly) {
+			MapTypes(assembly.GetExportedTypes());
+		}
+
+		public void MapTypesFromAssemblyContaining<T>() {
+			MapTypesFromAssembly(typeof(T).Assembly);
+		}
+
 		void IActiveRecordConfiguration.MappingSource(MappingSource source) {
 			mappingSourceBuilder = () => source;
 		}
@@ -97,6 +120,10 @@ namespace FluentLinqToSql.ActiveRecord {
 
 		void IActiveRecordConfiguration.ValidatorFactory(ValidatorFactory factory) {
 			ValidatorFactory = factory;
+		}
+
+		public MappingConventions Conventions {
+			get { return conventions; }
 		}
 
 		internal DataContext CreateContext(Type contextType) {
@@ -115,14 +142,14 @@ namespace FluentLinqToSql.ActiveRecord {
 		void ConnectionStringFromConfigFile(string connectionStringName);
 		void DataContextFactory(DataContextFactory factory);
 		void ScopeStorage(IScopeStorage storage);
-		/*void MapTypes(IEnumerable<Type> types);
+		void MapTypes(IEnumerable<Type> types);
 		void MapTypes(params Type[] types);
 		void MapTypesFromAssembly(Assembly assembly);
-		void MapTypesFromAssemblyContaining<T>();*/
+		void MapTypesFromAssemblyContaining<T>();
 		void MappingSource(MappingSource source);
 		void ConnectToSqlServer(string server, string database);
 		void ConnectToSqlServer(string server, string database, string user, string password);
 		void ValidatorFactory(ValidatorFactory factory);
-
+		MappingConventions Conventions { get; }
 	}
 }

@@ -45,5 +45,9 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 				cust.NotMapped.ShouldBeNull();
 			}
 		}
+
+		/*protected override void MapTypes(IActiveRecordConfiguration cfg) {
+			cfg.MapTypes(typeof(CustomisedCustomer));
+		}*/
 	}
 }

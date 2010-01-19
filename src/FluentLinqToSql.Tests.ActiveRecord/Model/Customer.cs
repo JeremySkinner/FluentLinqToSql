@@ -3,12 +3,12 @@ namespace FluentLinqToSql.Tests.ActiveRecord.Model {
 	using System.Data.Linq.Mapping;
 	using FluentLinqToSql.ActiveRecord;
 
-	[Table]
+//	[Table]
 	public class Customer : ActiveRecord<Customer> {
-		[Column(IsPrimaryKey = true, IsDbGenerated = true)]
+//		[Column(IsPrimaryKey = true, IsDbGenerated = true)]
 		public int Id { get; set; }
 
-		[Column]
+//		[Column]
 		public string Name { get; set; }
 	}
 }

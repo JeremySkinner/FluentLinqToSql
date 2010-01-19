@@ -76,9 +76,12 @@
     <Compile Include="ActiveRecord\ValidationException.cs" />
     <Compile Include="ActiveRecord\ValidationResult.cs" />
     <Compile Include="ActiveRecord\WebScopeStorage.cs" />
+    <Compile Include="ConventionMappingSource.cs" />
     <Compile Include="FluentMappingSource.cs" />
     <Compile Include="FunctionMapping.cs" />
     <Compile Include="Internal\Constants.cs" />
+    <Compile Include="MappingConventions.cs" />
+    <Compile Include="Mappings\ConventionMapping.cs" />
     <Compile Include="Mappings\DiscriminatorMapping.cs" />
     <Compile Include="Mappings\FunctionReturnTypeMapping.cs" />
     <Compile Include="Mappings\IAssociationMapping.cs" />

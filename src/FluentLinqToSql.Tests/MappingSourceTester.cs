@@ -74,7 +74,7 @@ namespace FluentLinqToSql.Tests {
 		[Test]
 		public void Should_apply_modifications() {
 			source.AddModification(new TestModification());
-			source.GetModel(typeof(DataContext)); //CreateMappingSource();
+			source.CreateMappingSource().GetModel(typeof(DataContext)); //CreateMappingSource();
 
 			Assert.That(source.First().CustomProperties["foo"], Is.EqualTo("bar"));
 		}
