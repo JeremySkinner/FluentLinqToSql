@@ -59,7 +59,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord
 				MapTypes(cfg);
 //				cfg.MapTypesFromAssemblyContaining<Customer>();
 				cfg.DataContextFactory((c, m) => {
-					return new DataContext(connection, m);
+					return new DataContext(connection, m) { Log = Console.Out };
 				});
 			});
 //			Setup();

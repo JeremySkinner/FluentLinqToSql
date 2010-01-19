@@ -70,6 +70,7 @@
     <Compile Include="FindAllTester.cs" />
     <Compile Include="FindByIdTester.cs" />
     <Compile Include="IntegrationTest.cs" />
+    <Compile Include="ManyToOneTester.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\CustomisedCustomer.cs" />
     <Compile Include="Model\Order.cs" />

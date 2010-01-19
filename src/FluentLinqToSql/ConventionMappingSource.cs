@@ -4,6 +4,7 @@ namespace FluentLinqToSql {
 	using System.Linq;
 	using System.Reflection;
 	using FluentLinqToSql.Mappings;
+	using FluentLinqToSql.Modifications;
 
 	public class ConventionMappingSource : FluentMappingSource {
 		private readonly Predicate<Type> mappedTypeSelector;
@@ -13,6 +14,8 @@ namespace FluentLinqToSql {
 			: base("AutoMapping") {
 			this.mappedTypeSelector = mappedTypeSelector;
 			this.conventions = conventions;
+
+			AddModification(UseFieldForAssociationStorage.LowercaseFirstCharacter);
 		}
 
 		public override FluentMappingSource AddFromAssembly(Assembly assembly) {

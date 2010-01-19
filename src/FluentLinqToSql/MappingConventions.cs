@@ -11,16 +11,6 @@ namespace FluentLinqToSql {
 	public class MappingConventions {
 		public Func<Type, IEnumerable<IColumnMapping>> PrimaryKeySelector = DefaultPrimaryKeySelector;
 		public Func<Type, string> TableNameSelector = DefaultTableNameSelector;
-
-		private static string DefaultTableNameSelector(Type type) {
-			var attr = (TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute));
-			if(attr != null && !string.IsNullOrEmpty(attr.Name)) {
-				return attr.Name;
-			}
-
-			return type.Name;
-		}
-
 		public Func<Type, IMapping> MappingCreator = DefaultMappingCreator;
 		public Func<Type, IEnumerable<Type>, IEnumerable<IBelongsToMapping>> BelongsToSelector = DefaultBelongsToSelector;
 		public Func<Type, IEnumerable<MemberInfo>, IEnumerable<IColumnMapping>> PropertySelector = DefaultPropertySelector;
@@ -43,6 +33,15 @@ namespace FluentLinqToSql {
 			return toReturn;
 		}
 
+		private static string DefaultTableNameSelector(Type type) {
+			var attr = (TableAttribute)Attribute.GetCustomAttribute(type, typeof(TableAttribute));
+			if (attr != null && !string.IsNullOrEmpty(attr.Name)) {
+				return attr.Name;
+			}
+
+			return type.Name;
+		}
+
 		private static IEnumerable<IBelongsToMapping> DefaultBelongsToSelector(Type type, IEnumerable<Type> otherTypes) {
 			var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
@@ -58,21 +57,22 @@ namespace FluentLinqToSql {
 										 where otherTypes.Contains(prop.PropertyType)
 										 select new{ prop, attr = new AssociationAttribute() {
 										                                              	IsForeignKey = true,
-																						ThisKey = prop.Name + "Id"
+																						ThisKey = prop.Name + "Id",
 										                                              } };
 
 			var toReturn = new List<IBelongsToMapping>();
 
 			foreach(var propsToMap in propsWithAttributes.Concat(propsWithoutAttributes)) {
-				var map = CreateBelongsToMapping(type, propsToMap.prop.PropertyType);
+				var map = CreateBelongsToMapping(type, propsToMap.prop.PropertyType, propsToMap.prop);
 				CopyAttributeToMapping(propsToMap.attr, map);
+				toReturn.Add(map);
 			}
 
 			return toReturn;
 		}
 
-		private static IBelongsToMapping CreateBelongsToMapping(Type instanceType, Type propertyType) {
-			return (IBelongsToMapping)Activator.CreateInstance(typeof(BelongsToMapping<,>).MakeGenericType(instanceType, propertyType));
+		private static IBelongsToMapping CreateBelongsToMapping(Type instanceType, Type propertyType, MemberInfo member) {
+			return (IBelongsToMapping)Activator.CreateInstance(typeof(BelongsToMapping<,>).MakeGenericType(instanceType, propertyType), member);
 		}
 
 		private static IMapping DefaultMappingCreator(Type type) {
