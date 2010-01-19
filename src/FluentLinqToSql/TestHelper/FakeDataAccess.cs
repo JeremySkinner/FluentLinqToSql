@@ -1,33 +1,34 @@
 namespace FluentLinqToSql.TestHelper {
 	using System;
+	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
 	using FluentLinqToSql.ActiveRecord;
 	using FluentLinqToSql.Internal;
 
-	internal class FakeDataAccess<T> : IDataAccess<T> {
-		readonly List<T> data = new List<T>();
+	internal class FakeDataAccess : IDataAccess {
+		readonly List<object> data = new List<object>();
 
-		public FakeDataAccess(IEnumerable<T> fakes) {
-			data.AddRange(fakes);
+		public FakeDataAccess(IEnumerable fakes) {
+			data.AddRange(fakes.Cast<object>());
 		}
 
-		public T FindById(object id) {
+		public T FindById<T>(object id) where T : class {
 			//TODO: Currently only supports "Id" property
 			var idExpression = Extensions.BuildIdExpression<T>(id, "Id");
 
-			return FindAll().SingleOrDefault(idExpression);
+			return FindAll<T>().SingleOrDefault(idExpression);
 		}
 
-		public IQueryable<T> FindAll() {
-			return data.AsQueryable();
+		public IQueryable<T> FindAll<T>() where T : class {
+			return data.OfType<T>().AsQueryable();
 		}
 
-		public void Save(T entity) {
+		public void Save<T>(T entity) where T : class {
 			data.Add(entity);
 		}
 
-		public void Delete(T entity) {
+		public void Delete<T>(T entity) where T : class {
 			data.Remove(entity);
 		}
 	}

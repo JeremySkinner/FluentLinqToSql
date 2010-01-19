@@ -8,18 +8,18 @@ namespace FluentLinqToSql.ActiveRecord
 	using FluentLinqToSql.Internal;
 	using FluentLinqToSql.TestHelper;
 
-	public interface IActiveRecord { }
+	public class ActiveRecord {
+		internal static IDataAccess dataAccess = new DefaultDataAccess();		
+	}
 
-	public class ActiveRecord<TEntity> : IActiveRecord where TEntity : ActiveRecord<TEntity>
+	public class ActiveRecord<TEntity> : ActiveRecord where TEntity : ActiveRecord<TEntity>
 	{
-		internal static IDataAccess<TEntity> dataAccess = new DefaultDataAccess<TEntity>();
-
 		public static TEntity FindById(object id) {
-			return dataAccess.FindById(id);
+			return dataAccess.FindById<TEntity>(id);
 		}
 
 		public static IQueryable<TEntity> FindAll() {
-			return dataAccess.FindAll();
+			return dataAccess.FindAll<TEntity>();
 		}
 
 		public void Save() {
@@ -48,14 +48,6 @@ namespace FluentLinqToSql.ActiveRecord
 			if(action == ChangeAction.Insert || action == ChangeAction.Update) {
 				Validate();
 			}
-		}
-
-		public static IDisposable Fake(params TEntity[] fakes) {
-			return Fake((IEnumerable<TEntity>)fakes);
-		}
-
-		public static IDisposable Fake(IEnumerable<TEntity> fakes) {
-			return new FakeDataScope<TEntity>(fakes);
 		}
 	}
 }

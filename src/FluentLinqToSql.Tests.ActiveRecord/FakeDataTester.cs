@@ -19,6 +19,7 @@
 namespace FluentLinqToSql.Tests.ActiveRecord {
 	using System.Linq;
 	using FluentLinqToSql.ActiveRecord;
+	using FluentLinqToSql.TestHelper;
 	using FluentLinqToSql.Tests.ActiveRecord.Model;
 	using NUnit.Framework;
 
@@ -39,7 +40,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 
 		[Test]
 		public void StoresFakeInstance() {
-			using (Customer.Fake()) {
+			using (Fake.Data()) {
 				var customer = new Customer {Name = "Jeremy", Id = 4};
 				customer.Save();
 
@@ -52,7 +53,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void RetrievesFakesInstances() {
 			var cust = new Customer {Id = 4};
 
-			using (Customer.Fake(cust)) {
+			using (Fake.Data(cust)) {
 				Customer.FindById(4).ShouldBeTheSameAs(cust);
 			}
 		}
@@ -64,7 +65,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 			                  	new Customer {Id = 2}
 			                  };
 
-			using(Customer.Fake(custs)) {
+			using(Fake.Data(custs)) {
 				var all = Customer.FindAll();
 				all.Count().ShouldEqual(2);
 			}
@@ -74,7 +75,7 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void DeletesInstance() {
 			var cust = new Customer { Id = 4 };
 
-			using (Customer.Fake(cust)) {
+			using (Fake.Data(cust)) {
 				cust.Delete();
 				Customer.FindAll().Count().ShouldEqual(0);
 			}
@@ -84,9 +85,9 @@ namespace FluentLinqToSql.Tests.ActiveRecord {
 		public void ResetsDataAccess() {
 			var cust = new Customer { Id = 4 };
 
-			using (Customer.Fake(cust)) { }
+			using (Fake.Data(cust)) { }
 
-			Customer.dataAccess.ShouldBe<DefaultDataAccess<Customer>>();
+			Customer.dataAccess.ShouldBe<DefaultDataAccess>();
 
 		}
 	}

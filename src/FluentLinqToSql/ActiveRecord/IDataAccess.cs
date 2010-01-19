@@ -4,17 +4,17 @@ namespace FluentLinqToSql.ActiveRecord {
 	using System.Linq.Expressions;
 	using FluentLinqToSql.Internal;
 
-	internal interface IDataAccess<T> {
-		T FindById(object id);
-		IQueryable<T> FindAll();
-		void Save(T entity);
-		void Delete(T entity);
+	internal interface IDataAccess {
+		T FindById<T>(object id) where T:class;
+		IQueryable<T> FindAll<T>() where T:class;
+		void Save<T>(T entity) where T:class;
+		void Delete<T>(T entity) where T:class;
 	}
 
-	internal class DefaultDataAccess<T> : IDataAccess<T> where T : class {
-		public T FindById(object id) {
+	internal class DefaultDataAccess : IDataAccess  {
+		public T FindById<T>(object id) where T : class {
 			var context = ContextScope.Current.Context;
-			var keyName = GetKeyName(context.GetType());
+			var keyName = GetKeyName<T>(context.GetType());
 
 			if (string.IsNullOrEmpty(keyName)) {
 				throw new NotSupportedException("FindById is not supported for entities that do not have a single-column primary key. Please use FindAll with a SingleOrDefault clause instead.");
@@ -26,22 +26,22 @@ namespace FluentLinqToSql.ActiveRecord {
 				.SingleOrDefault(idExpression);
 		}
 
-		public IQueryable<T> FindAll() {
+		public IQueryable<T> FindAll<T>() where T : class {
 			var context = ContextScope.Current.Context;
 			return context.GetTable<T>();
 		}
 
-		public void Save(T entity) {
+		public void Save<T>(T entity) where T : class {
 			var context = ContextScope.Current.Context;
 			context.GetTable<T>().InsertOnSubmit(entity);
 		}
 
-		public void Delete(T entity) {
+		public void Delete<T>(T entity) where T : class {
 			var context = ContextScope.Current.Context;
 			context.GetTable<T>().DeleteOnSubmit(entity);
 		}
 
-		private static string GetKeyName(Type contextType) {
+		private static string GetKeyName<T>(Type contextType) {
 			var keys = ActiveRecordConfiguration.Current.MappingSource.GetModel(contextType)
 				.GetMetaType(typeof(T))
 				.DataMembers.Where(x => x.IsPrimaryKey).ToList();

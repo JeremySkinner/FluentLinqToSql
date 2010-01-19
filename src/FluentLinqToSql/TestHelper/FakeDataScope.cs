@@ -18,21 +18,22 @@
 
 namespace FluentLinqToSql.TestHelper {
 	using System;
+	using System.Collections;
 	using System.Collections.Generic;
 	using FluentLinqToSql.ActiveRecord;
 
-	internal class FakeDataScope<T> : IDisposable where T : ActiveRecord<T> {
-		private FakeDataAccess<T> dataAccess;
-		private IDataAccess<T> original;
+	internal class FakeDataScope : IDisposable {
+		private FakeDataAccess dataAccess;
+		private IDataAccess original;
 
-		public FakeDataScope(IEnumerable<T> fakes) {
-			original = ActiveRecord<T>.dataAccess;
-			dataAccess = new FakeDataAccess<T>(fakes);
-			ActiveRecord<T>.dataAccess = dataAccess;
+		public FakeDataScope(IEnumerable fakes) {
+			original = ActiveRecord.dataAccess;
+			dataAccess = new FakeDataAccess(fakes);
+			ActiveRecord.dataAccess = dataAccess;
 		}
 
 		public void Dispose() {
-			ActiveRecord<T>.dataAccess = original;
+			ActiveRecord.dataAccess = original;
 		}
 	}
 }

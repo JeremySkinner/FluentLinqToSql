@@ -109,6 +109,7 @@
     <Compile Include="Mappings\IMapping.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="Private.cs" />
+    <Compile Include="TestHelper\Fake.cs" />
     <Compile Include="TestHelper\FakeDataScope.cs" />
     <Compile Include="TestHelper\MappingException.cs" />
     <Compile Include="TestHelper\MappingTester.cs" />
