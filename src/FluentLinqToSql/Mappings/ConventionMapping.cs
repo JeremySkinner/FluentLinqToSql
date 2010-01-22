@@ -31,8 +31,8 @@ namespace FluentLinqToSql.Mappings {
 		private void LoadPropertyMappings() {
 			var ids = conventions.PrimaryKeySelector(type);
 			var manyToOnes = conventions.BelongsToSelector(type, otherTypes);
-			//TODO: One to many
-			var otherMappedProperties = ids.Select(x => x.Property).Concat(manyToOnes.Select(x => x.Property));
+			var oneToMany = conventions.HasManySelector(type, otherTypes);
+			var otherMappedProperties = ids.Select(x => x.Property).Concat(manyToOnes.Select(x => x.Property)).Concat(oneToMany.Select(x => x.Property));
 			var columns = conventions.PropertySelector(type, otherMappedProperties);
 
 			foreach(var id in ids) {
@@ -43,9 +43,15 @@ namespace FluentLinqToSql.Mappings {
 				Mappings.Add(manyToOne);
 			}
 
+			foreach (var otm in oneToMany) {
+				Mappings.Add(otm);
+			}
+
+
 			foreach(var column in columns) {
 				Mappings.Add(column);
 			}
+
 
 
 		}

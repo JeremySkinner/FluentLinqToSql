@@ -75,6 +75,7 @@
     <Compile Include="Model\CustomisedCustomer.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="NameValueDeserializerTests.cs" />
+    <Compile Include="OneToManyTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveTester.cs" />
     <Compile Include="UpdateFromTester.cs" />

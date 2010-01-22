@@ -1,6 +1,7 @@
 namespace FluentLinqToSql {
 	using System;
 	using System.Collections.Generic;
+	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using System.Linq;
 	using System.Reflection;
@@ -13,7 +14,52 @@ namespace FluentLinqToSql {
 		public Func<Type, string> TableNameSelector = DefaultTableNameSelector;
 		public Func<Type, IMapping> MappingCreator = DefaultMappingCreator;
 		public Func<Type, IEnumerable<Type>, IEnumerable<IBelongsToMapping>> BelongsToSelector = DefaultBelongsToSelector;
+		public Func<Type, IEnumerable<Type>, IEnumerable<IHasManyMapping>> HasManySelector = DefaultHasManySelector;
 		public Func<Type, IEnumerable<MemberInfo>, IEnumerable<IColumnMapping>> PropertySelector = DefaultPropertySelector;
+
+
+		private static IEnumerable<IHasManyMapping> DefaultHasManySelector(Type type, IEnumerable<Type> otherTypes) {
+			var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+
+			var propsWithAttributes = from prop in props
+									  let attr = (AssociationAttribute)Attribute.GetCustomAttribute(prop, typeof(AssociationAttribute))
+									  where attr != null
+									  where attr.IsForeignKey == false
+									  select new { prop, attr };
+
+			var propsWithoutAttributes = from prop in props
+										 where Attribute.IsDefined(prop, typeof(NotMappedAttribute)) == false
+										 where Attribute.IsDefined(prop, typeof(AssociationAttribute)) == false
+										 let entityType = GetOneToManyType(prop.PropertyType)
+										 where entityType != null
+										 where otherTypes.Contains(entityType)
+										 select new{ prop, attr = new AssociationAttribute() {
+										                                              	OtherKey = type.Name + "Id"
+										                                              } };
+
+			var toReturn = new List<IHasManyMapping>();
+
+			foreach (var propsToMap in propsWithAttributes.Concat(propsWithoutAttributes)) {
+				var map = CreateHasManyMapping(type, propsToMap.prop.PropertyType, propsToMap.prop);
+				CopyAttributeToMapping(propsToMap.attr, map);
+				toReturn.Add(map);
+			}
+
+			return toReturn;
+
+		}
+
+		private static Type GetOneToManyType(Type type) {
+			if(type.IsGenericType) {
+				var genericType = type.GetGenericTypeDefinition();
+				bool isValid = genericType == typeof(IList<>) || genericType == typeof(ICollection<>) || genericType == typeof(EntitySet<>);
+				if(isValid) {
+					return type.GetGenericArguments()[0];
+				}
+			}
+
+			return null;
+		}
 
 		private static IEnumerable<IColumnMapping> DefaultPropertySelector(Type type, IEnumerable<MemberInfo> memberInfos) {
 			var props = from prop in type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
@@ -54,6 +100,7 @@ namespace FluentLinqToSql {
 			var propsWithoutAttributes = from prop in props
 										 where Attribute.IsDefined(prop, typeof(NotMappedAttribute)) == false
 										 where Attribute.IsDefined(prop, typeof(AssociationAttribute)) == false
+										 where GetOneToManyType(prop.PropertyType) == null
 										 where otherTypes.Contains(prop.PropertyType)
 										 select new{ prop, attr = new AssociationAttribute() {
 										                                              	IsForeignKey = true,
@@ -73,6 +120,10 @@ namespace FluentLinqToSql {
 
 		private static IBelongsToMapping CreateBelongsToMapping(Type instanceType, Type propertyType, MemberInfo member) {
 			return (IBelongsToMapping)Activator.CreateInstance(typeof(BelongsToMapping<,>).MakeGenericType(instanceType, propertyType), member);
+		}
+
+		private static IHasManyMapping CreateHasManyMapping(Type instanceType, Type propertyType, MemberInfo member) {
+			return (IHasManyMapping)Activator.CreateInstance(typeof(HasManyMapping<,>).MakeGenericType(instanceType, propertyType), member);
 		}
 
 		private static IMapping DefaultMappingCreator(Type type) {
@@ -133,7 +184,7 @@ namespace FluentLinqToSql {
 			//TODO: Discriminator
 		}
 
-		private static void CopyAttributeToMapping(AssociationAttribute attr, IBelongsToMapping belongsTo) {
+		private static void CopyAttributeToMapping(AssociationAttribute attr, IPropertyMapping belongsTo) {
 			if (attr.IsForeignKey) belongsTo.Attributes[Constants.IsForeignKey] = "true";
 			if (!string.IsNullOrEmpty(attr.ThisKey)) belongsTo.Attributes[Constants.ThisKey] = attr.ThisKey;
 			if (!string.IsNullOrEmpty(attr.OtherKey)) belongsTo.Attributes[Constants.OtherKey] = attr.OtherKey;

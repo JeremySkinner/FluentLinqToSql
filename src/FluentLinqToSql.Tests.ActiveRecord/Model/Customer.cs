@@ -1,5 +1,7 @@
 namespace FluentLinqToSql.Tests.ActiveRecord.Model {
+	using System;
 	using System.ComponentModel.DataAnnotations;
+	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
 	using FluentLinqToSql.ActiveRecord;
 
@@ -10,5 +12,16 @@ namespace FluentLinqToSql.Tests.ActiveRecord.Model {
 
 //		[Column]
 		public string Name { get; set; }
+
+		public Customer() {
+			orders = new EntitySet<Order>(o => o.Customer = this, o => o.Customer= null);
+		}
+
+		private EntitySet<Order> orders;
+
+		public EntitySet<Order> Orders {
+			get { return orders; }
+			set { orders.Assign(value); }
+		}
 	}
 }
