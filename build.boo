@@ -31,7 +31,7 @@ target createDb:
   #exec("lib/Tarantino/DatabaseDeployer.exe", "Rebuild (local) FluentLinqToSql db")
   print "Test database created"
 
-target dbTest, (compile):
+target dbTest:
   if not dbtest_enabled:
     print "Skipping database tests"
     return
