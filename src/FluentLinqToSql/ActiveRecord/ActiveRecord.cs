@@ -5,6 +5,7 @@ namespace FluentLinqToSql.ActiveRecord
 	using System.Collections.Specialized;
 	using System.Data.Linq;
 	using System.Linq;
+	using System.Linq.Expressions;
 	using FluentLinqToSql.Internal;
 	using FluentLinqToSql.TestHelper;
 
@@ -16,6 +17,10 @@ namespace FluentLinqToSql.ActiveRecord
 	{
 		public static TEntity FindById(object id) {
 			return dataAccess.FindById<TEntity>(id);
+		}
+
+		public static TEntity FindOne(Expression<Func<TEntity, bool>> predicate) {
+			return FindAll().SingleOrDefault(predicate);
 		}
 
 		public static IQueryable<TEntity> FindAll() {
