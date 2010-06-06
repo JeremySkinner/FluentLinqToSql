@@ -17,7 +17,7 @@ target noDatabase:
   dbtest_enabled = false  
 
 target compile:
-  msbuild(file: "FluentLinqToSql.sln", configuration: "release")
+  msbuild(file: "FluentLinqToSql.sln", configuration: "release", version: "4")
 
 target test:
   nunit(toolPath: "lib/nunit/nunit-console-x86.exe", assemblies: (test_assembly, artest_assembly))

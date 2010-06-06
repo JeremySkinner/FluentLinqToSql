@@ -8,7 +8,7 @@ namespace FluentLinqToSql.DatabaseTests {
 	using Entities;
 
 	public class TestDataContext : DataContext {
-		public static string ConnectionString = "Data Source=(local);Initial Catalog=FluentLinqToSql;Persist Security Info=True;Integrated Security=SSPI";
+		public static string ConnectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=FluentLinqToSql;Persist Security Info=True;Integrated Security=SSPI";
 		public TestDataContext(MappingSource mappingSource) : base(ConnectionString, mappingSource) {
 			Log = Console.Out;
 		}
